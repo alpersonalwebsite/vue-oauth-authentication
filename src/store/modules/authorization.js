@@ -1,4 +1,4 @@
-import api from '../../api/fb'
+import api from '../../api/google'
 
 const state = {
   token: null
@@ -9,7 +9,9 @@ const getters = {
 }
 
 const actions = {
-  login: () => api.login(),
+  login: () => { 
+    api.login()
+  },
   logout: ({ commit }) => {
     commit('setToken', null)
   }
