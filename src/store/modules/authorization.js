@@ -12,6 +12,9 @@ const actions = {
   login: () => { 
     api.login()
   },
+  continueOAuth: (obj, hash) => {
+    console.log('hash', hash)
+  },
   logout: ({ commit }) => {
     commit('setToken', null)
   }

@@ -1,6 +1,10 @@
 <template>
     <div>
-      <a href="#" v-on:click="login">Log In with OAuth 2.0 Provider</a>
+      <a href="#" v-on:click="login">Log in with OAuth 2.0 Provider</a>
+      |||
+      <router-link to="/route1">Route 1</router-link>
+      |||
+      <router-link to="/route2">Route 2</router-link>
     </div>
 </template>
 
