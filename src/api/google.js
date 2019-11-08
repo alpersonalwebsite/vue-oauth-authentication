@@ -1,10 +1,42 @@
+
+import qs from 'qs';
+import axios from 'axios'
+
+async function postGoogleCode(code) {
+
+const data = {
+  code,
+  client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+  client_secret: process.env.VUE_APP_GOOGLE_CLIENT_SECRET,
+  grant_type: 'authorization_code',
+  access_type: 'offline',
+  redirect_uri: process.env.VUE_APP_GOOGLE_REDIRECT_URI
+}
+
+// We need to decode the authorization code
+// From, ex, this... 4%2_9Klgdf... to 4/_9Klgdf 
+
+const options = {
+  method: 'POST',
+  headers: { 'content-type': 'application/x-www-form-urlencoded' },
+  data: decodeURIComponent(qs.stringify(data)),
+  url: process.env.VUE_APP_GOOGLE_TOKEN_URL,
+};
+
+return await axios(options)
+}
+
 export default {
   login() {
     window.location =
     process.env.VUE_APP_GOOGLE_URL +
     process.env.VUE_APP_GOOGLE_SCOPE +
-    process.env.VUE_APP_GOOGLE_REDIRECT_URI +
     'response_type=code&' +
-    process.env.VUE_APP_GOOGLE_CLIENT_ID
-  } 
+    'client_id=' + process.env.VUE_APP_GOOGLE_CLIENT_ID +
+    '&redirect_uri=' + process.env.VUE_APP_GOOGLE_REDIRECT_URI
+  }, 
+  async requestToken(code) {
+    const res = await postGoogleCode(code)
+    return res
+  }
 }

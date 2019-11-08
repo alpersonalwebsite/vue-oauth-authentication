@@ -12,8 +12,11 @@ const actions = {
   login: () => { 
     api.login()
   },
-  continueOAuth: (obj, hash) => {
-    console.log('hash', hash)
+  continueOAuth: async ({ commit }, location) => {
+    const code = location.href.match(/(?:code)\=([\S]*?)\&/)[1];
+    const res = await api.requestToken(code)
+    const token = res.data.access_token
+    commit('setToken', token)
   },
   logout: ({ commit }) => {
     commit('setToken', null)

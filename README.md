@@ -37,5 +37,5 @@ Add `Facebook Login` and click on `Save Changes`
 Create credentials: https://console.developers.google.com/apis/credentials and select OAuth client ID
 Configure consent screen (App example: `OAuth flow for Vue`) and save.
 Select `Web Application`
-For Authorized URIs put: `http://localhost:8081/callback`
+For Authorized URIs put: `http://localhost:8086/callback`
 Add to your `.env` the `client ID` and save the `client secret`
