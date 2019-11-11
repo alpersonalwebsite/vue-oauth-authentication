@@ -10,7 +10,8 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({
+// We are exporting it to use it in our actions (vuex)
+export const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/route1', component: Route1 },
