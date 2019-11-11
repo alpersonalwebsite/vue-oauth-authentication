@@ -1,4 +1,6 @@
-# vue-oauth-authentication
+# Vue, Vuex and Google OAuth 2.0
+
+This is an easy, basic and raw (no styles attached) example of **HOW to** implement `OAuth 2.0` (Google) in `Vue` with `Vuex store` and `localStorage` to persist the `token`.
 
 ## Project setup
 ```
