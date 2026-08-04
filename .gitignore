@@ -20,3 +20,17 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Secrets and keys
+secrets/
+credentials*
+*.pem
+*.key
+
+# Log files (npm/yarn debug logs are covered above)
+*.log
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
