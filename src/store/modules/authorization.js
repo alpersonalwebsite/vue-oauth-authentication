@@ -29,9 +29,26 @@ function clearStored() {
   window.sessionStorage.removeItem(USER_KEY)
 }
 
+// The user is read only if the token is still valid, and storage is cleared
+// otherwise. Reading it unconditionally left an expired session reporting
+// isLoggedIn === false while getUser still returned the old name, with the
+// stale name sitting in storage.
+function readStoredSession() {
+  const token = readStoredToken()
+
+  if (!token) {
+    clearStored()
+    return { token: null, user: null }
+  }
+
+  return { token, user: window.sessionStorage.getItem(USER_KEY) }
+}
+
+const stored = readStoredSession()
+
 const state = {
-  token: readStoredToken(),
-  user: window.sessionStorage.getItem(USER_KEY),
+  token: stored.token,
+  user: stored.user,
   error: null
 }
 

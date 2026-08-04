@@ -44,6 +44,45 @@ have one.
 The routes are not guarded. `/route1` and `/route2` render for anyone; the login
 state only changes what the header shows.
 
+### You may not be able to finish a sign-in without a backend
+
+Getting the redirect and the callback working is the part this repo teaches, and
+that part works. The final step, exchanging the code at Google's token endpoint,
+may not.
+
+Google's documentation lists `client_secret` as **Optional** for the token
+exchange, and says it is "not applicable" for clients registered as Android, iOS or
+Chrome apps. It says nothing about PKCE for the Web application client type. What
+is widely reported, and what you should expect if you followed step 3 below and
+registered a **Web application** client, is that the exchange fails with:
+
+```json
+{"error": "invalid_request", "error_description": "client_secret is missing."}
+```
+
+That has not been reproduced here, since it needs live Google credentials, so treat
+it as the likely failure rather than a certainty.
+
+If you hit it, **do not put the secret back into the app**. That was the original
+vulnerability: it would be in `dist/js/app.*.js` for anyone to read. The options
+are:
+
+1. Run the token exchange on a small backend that holds the secret. PKCE is still
+   worth having, and that backend is also where an `HttpOnly` cookie would be set.
+2. Have the browser obtain only an `id_token`, verify it server-side, and let the
+   backend call APIs.
+
+Either way the secret lives on a server, which is the whole point of the
+distinction between a public and a confidential client.
+
+### Requires a secure context
+
+`window.crypto.subtle`, used to hash the PKCE verifier, only exists in a [secure
+context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts).
+`localhost` counts, so `npm run serve` is fine. Serving the built app over plain
+`http://` on a LAN IP or any other host does not, and `login()` will fail with an
+opaque `TypeError` on `undefined`. Use `https` or `localhost`.
+
 ## Project setup
 
 ```shell
