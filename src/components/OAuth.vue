@@ -1,19 +1,29 @@
 <template>
     <div>
-      Authenticating...
+      <p v-if="getAuthError">Sign-in failed: {{ getAuthError }}</p>
+      <p v-else>Authenticating...</p>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'OAuth',
+  computed: {
+    ...mapGetters(['getAuthError'])
+  },
   methods: {
     ...mapActions(['continueOAuth'])
   },
-  created() {
-    this.continueOAuth(window.location)
+  // The navigation lives here rather than in the store action, so the store
+  // does not have to import the router from main.js (which imports the store).
+  async created() {
+    await this.continueOAuth(window.location.href)
+
+    if (!this.getAuthError) {
+      this.$router.push('/')
+    }
   }
 }
 </script>
