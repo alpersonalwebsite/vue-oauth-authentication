@@ -1,6 +1,5 @@
 # Vue, Vuex and Google OAuth 2.0 (Authorization Code + PKCE)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/alpersonalwebsite/vue-oauth-authentication.svg)](https://greenkeeper.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 This is an easy, basic and raw (no styles attached) example of **HOW to** implement
